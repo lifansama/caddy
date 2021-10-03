@@ -1,5 +1,8 @@
 name: Caddy Build
 
+env:
+  TZ: Asia/Shanghai
+
 on:
   workflow_dispatch:
   schedule:
