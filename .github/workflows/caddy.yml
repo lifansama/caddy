@@ -20,7 +20,7 @@ jobs:
     - name: Build
       run: |
         sudo apt update
-        sudo apt install zstd
+        sudo apt install zstd -y
         go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
         ~/go/bin/xcaddy build --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
         #tar zcvf ./caddy.tar.gz ./caddy
