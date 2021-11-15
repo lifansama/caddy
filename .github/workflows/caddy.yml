@@ -51,7 +51,7 @@ jobs:
       with:
         name: Caddy ${{ steps.cv.outputs.cv }}
         tag_name: ${{ steps.date.outputs.date }}
-        files: ./caddy.tar.gz
+        files: ./caddy.zst
     - name: Delete Artifacts
       uses: geekyeggo/delete-artifact@v1
       with:
