@@ -19,15 +19,17 @@ jobs:
 
     - name: Build
       run: |
+        sudo apt update
+        sudo apt install zstd
         go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
         ~/go/bin/xcaddy build --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
-        tar zcvf ./caddy.tar.gz ./caddy
-        
+        #tar zcvf ./caddy.tar.gz ./caddy
+        zstd -19 ./caddy
     - name: Output
       uses: actions/upload-artifact@v2
       with:
           name: Caddy
-          path: ./caddy.tar.gz
+          path: ./caddy.zst
           if-no-files-found: error
     
     - name: Get Current Date
