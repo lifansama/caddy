@@ -17,17 +17,12 @@ jobs:
       with:
         go-version: 1.17
         
-    - name: Install zstd
-      run: |
-        sudo apt update
-        sudo apt install zstd -y
-
     - name: Build
       run: |
         go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
         ~/go/bin/xcaddy build --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
         #tar zcvf ./caddy.tar.gz ./caddy
-        zstd -T0 -19 ./caddy
+        tar cvfa ./caddy.tar.zst ./caddy
 
     - name: Output
       uses: actions/upload-artifact@v2
