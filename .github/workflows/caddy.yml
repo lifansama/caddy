@@ -28,7 +28,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
           name: Caddy
-          path: ./caddy.zst
+          path: ./caddy.tar.zst
           if-no-files-found: error
     
     - name: Get Current Date
@@ -46,7 +46,7 @@ jobs:
       with:
         name: Caddy ${{ steps.cv.outputs.cv }}
         tag_name: ${{ steps.date.outputs.date }}
-        files: ./caddy.zst
+        files: ./caddy.tar.zst
     - name: Delete Artifacts
       uses: geekyeggo/delete-artifact@v1
       with:
