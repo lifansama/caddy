@@ -8,4 +8,8 @@ tar xvf caddy.tar.zst
 rm -rf /usr/bin/caddy
 mv caddy /usr/bin
 chmod +x /usr/bin/caddy
+caddy version
 service caddy restart
+rm -rf caddy.tar.zst
+rm -rf caddy
+
