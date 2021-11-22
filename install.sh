@@ -10,7 +10,6 @@ tar xvf caddy.tar.zst
 chmod +x caddy
 mv caddy /usr/bin/
 mkdir /etc/caddy
-touch /etc/caddy/Caddyfile
 rm -rf caddy.tar.zst
 
 groupadd --system caddy
@@ -21,6 +20,27 @@ useradd --system \
     --shell /usr/sbin/nologin \
     --comment "Caddy web server" \
     caddy
+
+cat << EOF > /etc/caddy/Caddyfile
+{
+  servers {
+    protocol {
+      experimental_http3
+    }
+  }
+}
+:443, example.com
+tls me@example.com
+route {
+  forward_proxy {
+    basic_auth user pass
+    hide_ip
+    hide_via
+    probe_resistance
+  }
+  file_server { root /var/www/html }
+}
+EOF
 
 cat << EOF > /etc/systemd/system/caddy.service
 [Unit]
