@@ -11,6 +11,7 @@ chmod +x caddy
 mv caddy /usr/bin/
 mkdir /etc/caddy
 touch /etc/caddy/Caddyfile
+rm -rf caddy.tar.zst
 
 groupadd --system caddy
 useradd --system \
@@ -46,3 +47,4 @@ EOF
 
 systemctl daemon-reload
 systemctl enable caddy
+
