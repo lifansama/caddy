@@ -37,14 +37,16 @@ jobs:
     
     - name: Get Caddy Version
       id: cv
-      run: echo "::set-output name=cv::$(./caddy version | awk '{print $1}')"
+      run: |
+        echo "::set-output name=cv::$(./caddy version | awk '{print $1}')"
+        echo "::set-output name=gv::$(go version | awk '{print $3}')"
     
     - name: Release
       uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        name: Caddy ${{ steps.cv.outputs.cv }}
+        name: Caddy ${{ steps.cv.outputs.cv }} with ${{ steps.cv.outputs.gv }}
         tag_name: ${{ steps.date.outputs.date }}
         files: ./caddy.tar.zst
     - name: Delete Artifacts
