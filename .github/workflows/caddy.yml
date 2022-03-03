@@ -37,7 +37,7 @@ jobs:
     
     - name: Get Caddy Version
       id: cv
-      run: echo "::set-output name=cv::$(./caddy version)"
+      run: echo "::set-output name=cv::$(./caddy version | awk '{print $1}')"
     
     - name: Release
       uses: softprops/action-gh-release@v1
