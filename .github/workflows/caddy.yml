@@ -22,6 +22,7 @@ jobs:
       run: |
         go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
         ~/go/bin/xcaddy build master --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
+        chmod +x caddy
         #tar zcvf ./caddy.tar.gz ./caddy
         ZSTD_CLEVEL=19 tar cvfa ./caddy.tar.zst caddy
 
