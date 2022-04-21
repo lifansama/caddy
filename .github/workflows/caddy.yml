@@ -23,14 +23,14 @@ jobs:
         go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
         ~/go/bin/xcaddy build master --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
         chmod +x caddy
-        #tar zcvf ./caddy.tar.gz ./caddy
-        ZSTD_CLEVEL=19 tar cvfa ./caddy.tar.zst caddy
+        tar cvfa ./caddy.tar.xz ./caddy
+        #ZSTD_CLEVEL=19 tar cvfa ./caddy.tar.zst caddy
 
     - name: Output
       uses: actions/upload-artifact@v2
       with:
           name: Caddy
-          path: ./caddy.tar.zst
+          path: ./caddy.tar.xz
           if-no-files-found: error
     
     - name: Get Current Date
@@ -50,7 +50,7 @@ jobs:
       with:
         name: Caddy ${{ steps.cv.outputs.cv }} with ${{ steps.cv.outputs.gv }}
         tag_name: ${{ steps.date.outputs.date }}
-        files: ./caddy.tar.zst
+        files: ./caddy.tar.xz
     - name: Delete Artifacts
       uses: geekyeggo/delete-artifact@v1
       with:
