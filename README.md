@@ -3,12 +3,5 @@ Build Self-use Caddy Automatically.
 
 
 ```
-// Install
-bash <(curl -L https://raw.githubusercontent.com/lifansama/caddy/master/install.sh)
-```
-
-
-```
-// Update
-bash <(curl -L https://raw.githubusercontent.com/lifansama/caddy/master/update.sh)
+tar xvf caddy.tar.xz
 ```
