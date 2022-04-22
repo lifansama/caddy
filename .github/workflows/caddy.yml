@@ -23,20 +23,20 @@ jobs:
         go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
         ~/go/bin/xcaddy build master --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
         chmod +x caddy
-        XZ_OPT='-T0 -e -v' tar cvfa ./caddy_linux_amd64.tar.xz ./caddy
+        XZ_OPT='-T0 -e -v' tar cvfa caddy_linux_amd64.tar.xz caddy
         #ZSTD_CLEVEL=19 tar cvfa ./caddy_linux_amd64.tar.zst caddy
         
         export GOARCH=amd64 GOOS=windows
         ~/go/bin/xcaddy build master --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive --output ./caddy.exe
-        XZ_OPT='-T0 -e -v' tar cvfa ./caddy_windows_amd64.tar.xz ./caddy.exe
+        XZ_OPT='-T0 -e -v' tar cvfa caddy_windows_amd64.tar.xz caddy.exe
        
     - name: Output
       uses: actions/upload-artifact@v2
       with:
           name: Caddy
           path: |
-            ./caddy_linux_amd64.tar.xz
-            ./caddy_windows_amd64.tar.xz
+            caddy_linux_amd64.tar.xz
+            caddy_windows_amd64.tar.xz
           if-no-files-found: error
     
     - name: Get Current Date
@@ -57,8 +57,8 @@ jobs:
         name: Caddy ${{ steps.cv.outputs.cv }} with ${{ steps.cv.outputs.gv }}
         tag_name: ${{ steps.date.outputs.date }}
         files: |
-          ./caddy_linux_amd64.tar.xz
-          ./caddy_windows_amd64.tar.xz
+          caddy_linux_amd64.tar.xz
+          caddy_windows_amd64.tar.xz
     - name: Delete Artifacts
       uses: geekyeggo/delete-artifact@v1
       with:
