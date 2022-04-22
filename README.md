@@ -3,5 +3,5 @@ Build Self-use Caddy Automatically.
 
 
 ```
-tar xvf caddy.tar.xz
+tar xvf caddy_windows_amd64.tar.xz
 ```
