@@ -3,5 +3,6 @@ Build Self-use Caddy Automatically.
 
 
 ```
-tar xvf caddy_windows_amd64.tar.xz
+apt install -y zstd
+tar xvf caddy_windows_amd64.tar.zst
 ```
