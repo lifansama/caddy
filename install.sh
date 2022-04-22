@@ -8,7 +8,7 @@ tar xvf caddy_linux_amd64.tar.zst
 chmod +x caddy
 mv caddy /usr/bin/
 mkdir /etc/caddy
-rm -rf caddy.tar.xz
+rm -rf caddy_linux_amd64.tar.zst
 
 groupadd --system caddy
 useradd --system \
