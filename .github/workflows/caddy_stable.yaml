@@ -1,4 +1,6 @@
-name: Caddy Build
+name: Caddy Stable Build
+
+on: push
 
 jobs:
 
