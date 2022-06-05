@@ -1,0 +1,63 @@
+name: Caddy Build
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '>=0.0.0'
+        check-latest: true
+        
+    - name: Build
+      run: |
+        go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
+        ~/go/bin/xcaddy build --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
+        chmod +x caddy
+        #XZ_OPT='-T0 -e -v' tar cvfa caddy_linux_amd64.tar.xz caddy
+        ZSTD_CLEVEL=19 tar cvfa caddy_linux_amd64.tar.zst caddy
+        
+        export GOARCH=amd64 GOOS=windows
+        ~/go/bin/xcaddy build master --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive --output ./caddy.exe
+        #XZ_OPT='-T0 -e -v' tar cvfa caddy_windows_amd64.tar.xz caddy.exe
+        ZSTD_CLEVEL=19 tar cvfa caddy_windows_amd64.tar.zst caddy.exe
+        
+    - name: Output
+      uses: actions/upload-artifact@v2
+      with:
+          name: Caddy
+          path: |
+            caddy_linux_amd64.tar.zst
+            caddy_windows_amd64.tar.zst
+          if-no-files-found: error
+    
+    - name: Get Current Date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+    
+    - name: Get Caddy Version
+      id: cv
+      run: |
+        echo "::set-output name=cv::$(./caddy version | awk '{print $1}')"
+        echo "::set-output name=gv::$(go version | awk '{print $3}')"
+    
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        name: Caddy ${{ steps.cv.outputs.cv }} with ${{ steps.cv.outputs.gv }}
+        tag_name: ${{ steps.date.outputs.date }}
+        files: |
+          caddy_linux_amd64.tar.zst
+          caddy_windows_amd64.tar.zst
+    - name: Delete Artifacts
+      uses: geekyeggo/delete-artifact@v1
+      with:
+        name: |
+          Caddy
+
