@@ -1,6 +1,8 @@
 name: Caddy Stable Build
 
-on: push
+on: |
+  workflow_dispatch
+  push
 
 jobs:
 
