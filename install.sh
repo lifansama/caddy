@@ -62,6 +62,8 @@ AmbientCapabilities=CAP_NET_BIND_SERVICE
 WantedBy=multi-user.target
 EOF
 
+setcap 'cap_net_bind_service=+ep' /usr/bin/caddy
+
 systemctl daemon-reload
 systemctl enable caddy
 
