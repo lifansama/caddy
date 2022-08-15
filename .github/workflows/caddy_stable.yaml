@@ -53,7 +53,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         name: Caddy ${{ steps.cv.outputs.cv }} with ${{ steps.cv.outputs.gv }}
-        tag_name: ${{ steps.date.outputs.date }}
+        tag_name: ${{ steps.date.outputs.date }}-release
         files: |
           caddy_linux_amd64.tar.zst
           caddy_windows_amd64.tar.zst
