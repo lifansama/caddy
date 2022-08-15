@@ -52,7 +52,6 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        prerelease: true
         name: Caddy ${{ steps.cv.outputs.cv }} with ${{ steps.cv.outputs.gv }}
         tag_name: ${{ steps.date.outputs.date }}-release
         files: |
