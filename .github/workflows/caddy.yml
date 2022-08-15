@@ -25,7 +25,8 @@ jobs:
         tag_name: 'master_branch'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Delete workflow runs
+        
+    - name: Clean workflow runs
       uses: Mattraks/delete-workflow-runs@v2
       with:
         token: ${{ github.token }}
