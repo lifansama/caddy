@@ -25,7 +25,13 @@ jobs:
         tag_name: 'master_branch'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+    - name: Delete workflow runs
+      uses: Mattraks/delete-workflow-runs@v2
+      with:
+        token: ${{ github.token }}
+        repository: ${{ github.repository }}
+        retain_days: 30
+        keep_minimum_runs: 2
     
     - name: Build
       run: |
@@ -69,6 +75,7 @@ jobs:
         files: |
           caddy_linux_amd64.tar.zst
           caddy_windows_amd64.tar.zst
+          
     - name: Delete Artifacts
       uses: geekyeggo/delete-artifact@v1
       with:
