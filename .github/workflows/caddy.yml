@@ -17,7 +17,16 @@ jobs:
       with:
         go-version: '>=0.0.0'
         check-latest: true
-        
+    
+    - name: Remove Odd Release
+      uses: dev-drprasad/delete-tag-and-release@v0.2.0
+      with:
+        delete_release: true
+        tag_name: '*-master'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    
     - name: Build
       run: |
         go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
