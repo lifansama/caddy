@@ -73,6 +73,7 @@ jobs:
       with:
         name: Caddy ${{ steps.cv.outputs.cv }} with ${{ steps.cv.outputs.gv }}
         tag_name: master_branch
+        prerelease: true
         files: |
           caddy_linux_amd64.tar.zst
           caddy_windows_amd64.tar.zst
