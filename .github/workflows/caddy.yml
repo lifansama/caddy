@@ -22,7 +22,7 @@ jobs:
       uses: dev-drprasad/delete-tag-and-release@v0.2.0
       with:
         delete_release: true
-        tag_name: 'master'
+        tag_name: 'master_branch'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
@@ -65,7 +65,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         name: Caddy ${{ steps.cv.outputs.cv }} with ${{ steps.cv.outputs.gv }}
-        tag_name: master
+        tag_name: master_branch
         files: |
           caddy_linux_amd64.tar.zst
           caddy_windows_amd64.tar.zst
