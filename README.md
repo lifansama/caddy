@@ -9,3 +9,7 @@ Build Self-use Caddy Automatically.
 apt install -y zstd
 tar xvf caddy_windows_amd64.tar.zst
 ```
+
+```
+curl https://raw.githubusercontent.com/lifansama/caddy/master/update.sh | bash
+```
