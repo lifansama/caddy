@@ -1,11 +1,10 @@
 #!/bin/bash
 source /etc/profile
 
-wget https://github.com/lifansama/caddy/releases/latest/download/caddy_linux_amd64.tar.zst
-tar xvf caddy_linux_amd64.tar.zst
+apt update
+apt install zstd
 
-chmod +x caddy
-mv caddy /usr/bin/
+wget -q https://github.com/lifansama/caddy/releases/latest/download/caddy_linux_amd64.tar.zst -O - | tar xv --zstd | xargs mv -t /usr/bin
 mkdir /etc/caddy
 rm -rf caddy_linux_amd64.tar.zst
 
