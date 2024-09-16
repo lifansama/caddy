@@ -30,7 +30,7 @@ jobs:
         zip -9 caddy_windows_amd64.zip caddy.exe
         
     - name: Output
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact
       with:
           name: Caddy
           path: |
