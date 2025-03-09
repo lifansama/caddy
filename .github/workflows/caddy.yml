@@ -84,6 +84,7 @@ jobs:
         files: |
           caddy_linux_amd64.tar.zst
           caddy_windows_amd64.zip
+          caddy_freebsd_amd64.tar.zst
           
     - name: Delete Artifacts
       uses: geekyeggo/delete-artifact@v5
