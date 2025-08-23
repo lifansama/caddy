@@ -59,7 +59,7 @@ jobs:
           caddy_linux_amd64.tar.zst
           caddy_windows_amd64.zip
     - name: Delete Artifacts
-      uses: geekyeggo/delete-artifact@v1
+      uses: geekyeggo/delete-artifact@v5
       with:
         name: |
           Caddy
