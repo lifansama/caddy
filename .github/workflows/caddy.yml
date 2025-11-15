@@ -35,7 +35,7 @@ jobs:
     - name: Build
       run: |
         go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
-        ~/go/bin/xcaddy build master --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
+        ~/go/bin/xcaddy build master --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive --with github.com/mholt/caddy-l4
         chmod +x caddy
         #XZ_OPT='-T0 -e -v' tar cvfa caddy_linux_amd64.tar.xz caddy
         ZSTD_CLEVEL=19 tar cvfa caddy_linux_amd64.tar.zst caddy
