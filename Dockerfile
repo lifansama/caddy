@@ -8,9 +8,7 @@ RUN apk add --no-cache git
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
 
 # 3. 编译 Caddy
-# 使用 CGO_ENABLED=0 确保静态链接
-# 加上 -ldflags="-s -w" 可以在不使用 UPX 的情况下减小约 20%-30% 的二进制体积
-RUN CGO_ENABLED=0 xcaddy build \
+RUN xcaddy build \
     --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive \
     --with github.com/mholt/caddy-l4 \
     --output /usr/bin/caddy
