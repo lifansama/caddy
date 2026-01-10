@@ -8,10 +8,10 @@ RUN apk add --no-cache git
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
 
 # 3. 编译 Caddy
+ENV XCADDY_LDFLAGS="-s -w"
 RUN xcaddy build \
     --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive \
     --with github.com/mholt/caddy-l4 \
-    --with-ldflags="-s -w" \
     --output /usr/bin/caddy
 
 # --- 阶段 2: 运行阶段 ---
