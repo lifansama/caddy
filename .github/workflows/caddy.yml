@@ -85,7 +85,6 @@ jobs:
             Build Date: ${{ steps.meta.outputs.date }}
             Go Version: ${{ steps.meta.outputs.gv }}
             Caddy Version: ${{ steps.meta.outputs.cv }}
-            Built from master branch with NaiveProxy and L4.
           prerelease: true
           files: |
             caddy_linux_amd64.tar.zst
