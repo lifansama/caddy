@@ -53,6 +53,7 @@ jobs:
           context: .
           push: true
           pull: true
+          platforms: linux/amd64
           tags: |
             ghcr.io/${{ github.repository_owner }}/caddy:latest
             ghcr.io/${{ github.repository_owner }}/caddy:${{ steps.build_info.outputs.cv }}
