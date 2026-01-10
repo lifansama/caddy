@@ -25,7 +25,7 @@ jobs:
         run: |
           go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
           
-          ~/go/bin/xcaddy build --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive --with github.com/mholt/caddy-l4 --with-ldflags="-s -w"
+          XCADDY_LDFLAGS="-s -w" ~/go/bin/xcaddy build --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive --with github.com/mholt/caddy-l4
           chmod +x caddy
           ZSTD_CLEVEL=19 tar cvfa caddy_linux_amd64.tar.zst caddy
           
@@ -33,7 +33,7 @@ jobs:
           echo "gv=$(go version | awk '{print $3}')" >> $GITHUB_OUTPUT
           
           export GOARCH=amd64 GOOS=windows
-          ~/go/bin/xcaddy build --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive --with github.com/mholt/caddy-l4 --with-ldflags="-s -w" --output ./caddy.exe
+          XCADDY_LDFLAGS="-s -w" ~/go/bin/xcaddy build --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive --with github.com/mholt/caddy-l4 --output ./caddy.exe
           zip -9 caddy_windows_amd64.zip caddy.exe
 
 
