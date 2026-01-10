@@ -1,5 +1,5 @@
 # --- 阶段 1: 构建阶段 ---
-FROM golang:alpine AS builder
+FROM golang:latest AS builder
 
 # 1. 安装必要的构建工具
 RUN apk add --no-cache git
