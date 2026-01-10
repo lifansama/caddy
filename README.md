@@ -16,18 +16,11 @@ curl https://raw.githubusercontent.com/lifansama/caddy/master/update.sh | bash
 
 ## Run with Docker
 ```
+mkdir -p /etc/caddy/data
+mkdir -p /etc/caddy/config
 chown -R 1000:1000 /etc/caddy
 ```
 
 ```
-docker run -d \
-  --name caddy \
-  --network host \
-  --restart unless-stopped \
-  --user 1000:1000 \
-  -v /etc/caddy/caddy.json:/etc/caddy/caddy.json \
-  -v /etc/caddy/data:/data \
-  -v /etc/caddy/config:/config \
-  ghcr.io/lifansama/caddy:latest \
-  caddy run --config /etc/caddy/caddy.json
+docker run -d --name caddy --network host --restart unless-stopped --user 1000:1000 -v /etc/caddy/caddy.json:/etc/caddy/caddy.json:Z -v /etc/caddy/data:/data:Z -v /etc/caddy/config:/config:Z ghcr.io/lifansama/caddy:latest caddy run --config /etc/caddy/caddy.json
 ```
