@@ -1,0 +1,98 @@
+name: Caddy Master Weekly Build
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 每周一 19:30 触发
+    - cron: '30 19 * * 1'
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # 统一管理插件，方便修改
+      PLUGINS: >-
+        --with github.com/caddyserver/forwardproxy@caddy2=github.com/klzgrad/forwardproxy@naive
+        --with github.com/mholt/caddy-l4
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable' # 始终使用最新的稳定版
+          check-latest: true
+          cache: true # 自动缓存 go 依赖
+
+      - name: Pre-clean Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 忽略找不到 release 的错误
+          gh release delete "master_branch" --yes --cleanup-tag || true
+
+      - name: Clean old workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 7
+          keep_minimum_runs: 1
+
+      - name: Install xcaddy
+        run: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest
+
+      - name: Build Binaries
+        run: |
+          # 1. 编译 Linux AMD64 (带 L4 模块)
+          XCADDY_LDFLAGS="-s -w" ~/go/bin/xcaddy build master ${{ env.PLUGINS }}
+          # 立即备份一个用于版本检测，因为后面会压缩或删除
+          cp caddy caddy_check 
+          ZSTD_CLEVEL=19 tar cvfa caddy_linux_amd64.tar.zst caddy
+          rm caddy
+
+          # 2. 编译 FreeBSD AMD64
+          export GOARCH=amd64 GOOS=freebsd
+          XCADDY_LDFLAGS="-s -w" ~/go/bin/xcaddy build master ${{ env.PLUGINS }}
+          ZSTD_CLEVEL=19 tar cvfa caddy_freebsd_amd64.tar.zst caddy
+          rm caddy
+
+          # 3. 编译 Windows AMD64
+          export GOARCH=amd64 GOOS=windows
+          XCADDY_LDFLAGS="-s -w" ~/go/bin/xcaddy build master ${{ env.PLUGINS }} --output ./caddy.exe
+          zip -9 caddy_windows_amd64.zip caddy.exe
+
+      - name: Get Metadata
+        id: meta
+        run: |
+          chmod +x caddy_check
+          echo "cv=$(./caddy_check version | awk '{print $1}')" >> $GITHUB_OUTPUT
+          echo "gv=$(go version | awk '{print $3}')" >> $GITHUB_OUTPUT
+          echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Caddy ${{ steps.meta.outputs.cv }} (Master Build)
+          tag_name: master_branch
+          body: |
+            Build Date: ${{ steps.meta.outputs.date }}
+            Go Version: ${{ steps.meta.outputs.gv }}
+            Caddy Version: ${{ steps.meta.outputs.cv }}
+          prerelease: true
+          files: |
+            caddy_linux_amd64.tar.zst
+            caddy_windows_amd64.zip
+            caddy_freebsd_amd64.tar.zst
+
+      - name: Delete Artifacts
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: Caddy
+          failOnArtifactNotFound: false
