@@ -57,8 +57,9 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository_owner }}/caddy:latest
             ghcr.io/${{ github.repository_owner }}/caddy:${{ steps.build_info.outputs.cv }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          no-cache: true
+          #cache-from: type=gha
+          #cache-to: type=gha,mode=max
 
       - name: Get Current Date
         id: date
