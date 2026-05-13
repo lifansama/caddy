@@ -66,7 +66,7 @@ jobs:
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           name: Caddy ${{ steps.build_info.outputs.cv }} (Go ${{ steps.build_info.outputs.gv }})
           tag_name: ${{ steps.date.outputs.date }}-v${{ steps.build_info.outputs.cv }}
