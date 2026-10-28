@@ -25,12 +25,12 @@ jobs:
           git clone -b naive --depth=1 https://github.com/klzgrad/forwardproxy.git .forwardproxy-src
           git clone --depth=1 --branch "v2.11.7" https://github.com/caddyserver/caddy.git .caddy-bbr
 
-          curl -sL https://raw.githubusercontent.com/klzgrad/forwardproxy/naive/caddy-sing-quic-bbrv1.patch -o caddy-sing-quic-bbrv1.patch || true
+          #curl -sL https://raw.githubusercontent.com/klzgrad/forwardproxy/naive/caddy-sing-quic-bbrv1.patch -o caddy-sing-quic-bbrv1.patch || true
           curl -sL https://raw.githubusercontent.com/klzgrad/forwardproxy/naive/caddy-read-idle-timeout.patch -o caddy-read-idle-timeout.patch || true
 
-          if [ -f "caddy-sing-quic-bbrv1.patch" ] && [ -s "caddy-sing-quic-bbrv1.patch" ]; then
-            git -C .caddy-bbr apply "$GITHUB_WORKSPACE/caddy-sing-quic-bbrv1.patch"
-          fi
+          #if [ -f "caddy-sing-quic-bbrv1.patch" ] && [ -s "caddy-sing-quic-bbrv1.patch" ]; then
+            #git -C .caddy-bbr apply "$GITHUB_WORKSPACE/caddy-sing-quic-bbrv1.patch"
+          #fi
           if [ -f "caddy-read-idle-timeout.patch" ] && [ -s "caddy-read-idle-timeout.patch" ]; then
             git -C .caddy-bbr apply "$GITHUB_WORKSPACE/caddy-read-idle-timeout.patch"
           fi
