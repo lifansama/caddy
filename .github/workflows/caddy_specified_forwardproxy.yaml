@@ -23,7 +23,7 @@ jobs:
       - name: Prepare Forwardproxy Source
         run: |
           git clone -b naive --depth=1 https://github.com/klzgrad/forwardproxy.git .forwardproxy-src
-          git clone --depth=1 --branch "$CADDY_VER" https://github.com/caddyserver/caddy.git .caddy-bbr
+          git clone --depth=1 --branch "v2.11.7" https://github.com/caddyserver/caddy.git .caddy-bbr
 
           curl -sL https://raw.githubusercontent.com/klzgrad/forwardproxy/naive/caddy-sing-quic-bbrv1.patch -o caddy-sing-quic-bbrv1.patch || true
           curl -sL https://raw.githubusercontent.com/klzgrad/forwardproxy/naive/caddy-read-idle-timeout.patch -o caddy-read-idle-timeout.patch || true
